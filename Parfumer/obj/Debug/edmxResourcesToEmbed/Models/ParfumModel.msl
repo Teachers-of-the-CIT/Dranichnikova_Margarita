@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Хранилище ParfumerModelContainer" CdmEntityContainer="ParfumerEntities">
+    <EntitySetMapping Name="Category">
+      <EntityTypeMapping TypeName="ParfumerModel.Category">
+        <MappingFragment StoreEntitySet="Category">
+          <ScalarProperty Name="Id_category" ColumnName="Id_category" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Good">
+      <EntityTypeMapping TypeName="ParfumerModel.Good">
+        <MappingFragment StoreEntitySet="Good">
+          <ScalarProperty Name="Id_good" ColumnName="Id_good" />
+          <ScalarProperty Name="Id_category" ColumnName="Id_category" />
+          <ScalarProperty Name="sale" ColumnName="sale" />
+          <ScalarProperty Name="count" ColumnName="count" />
+          <ScalarProperty Name="description" ColumnName="description" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Order">
+      <EntityTypeMapping TypeName="ParfumerModel.Order">
+        <MappingFragment StoreEntitySet="Order">
+          <ScalarProperty Name="Id_order" ColumnName="Id_order" />
+          <ScalarProperty Name="Id_user" ColumnName="Id_user" />
+          <ScalarProperty Name="Id_point" ColumnName="Id_point" />
+          <ScalarProperty Name="Id_status" ColumnName="Id_status" />
+          <ScalarProperty Name="code" ColumnName="code" />
+          <ScalarProperty Name="date" ColumnName="date" />
+          <ScalarProperty Name="delivery" ColumnName="delivery" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Order_elem">
+      <EntityTypeMapping TypeName="ParfumerModel.Order_elem">
+        <MappingFragment StoreEntitySet="Order_elem">
+          <ScalarProperty Name="Id_order_elemId" ColumnName="Id_order_elemId" />
+          <ScalarProperty Name="Id_good" ColumnName="Id_good" />
+          <ScalarProperty Name="Id_order" ColumnName="Id_order" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Poin_of_issie">
+      <EntityTypeMapping TypeName="ParfumerModel.Poin_of_issie">
+        <MappingFragment StoreEntitySet="Poin_of_issie">
+          <ScalarProperty Name="Id_point" ColumnName="Id_point" />
+          <ScalarProperty Name="index" ColumnName="index" />
+          <ScalarProperty Name="addres" ColumnName="addres" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Status">
+      <EntityTypeMapping TypeName="ParfumerModel.Status">
+        <MappingFragment StoreEntitySet="Status">
+          <ScalarProperty Name="Id_status" ColumnName="Id_status" />
+          <ScalarProperty Name="name" ColumnName="name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="User">
+      <EntityTypeMapping TypeName="ParfumerModel.User">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="Id_user" ColumnName="Id_user" />
+          <ScalarProperty Name="role" ColumnName="role" />
+          <ScalarProperty Name="FIO" ColumnName="FIO" />
+          <ScalarProperty Name="login" ColumnName="login" />
+          <ScalarProperty Name="password" ColumnName="password" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
