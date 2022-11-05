@@ -1,0 +1,457 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище ParfumerModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Id_category" />
+          </Key>
+          <Property Name="Id_category" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="70" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Good">
+          <Key>
+            <PropertyRef Name="Id_good" />
+          </Key>
+          <Property Name="Id_good" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_category" Type="int" Nullable="false" />
+          <Property Name="sale" Type="int" />
+          <Property Name="count" Type="int" />
+          <Property Name="description" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Id_order" />
+          </Key>
+          <Property Name="Id_order" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_user" Type="int" />
+          <Property Name="Id_point" Type="int" Nullable="false" />
+          <Property Name="Id_status" Type="int" Nullable="false" />
+          <Property Name="code" Type="int" Nullable="false" />
+          <Property Name="date" Type="date" Nullable="false" />
+          <Property Name="delivery" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Order_elem">
+          <Key>
+            <PropertyRef Name="Id_order_elemId" />
+          </Key>
+          <Property Name="Id_order_elemId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_good" Type="int" Nullable="false" />
+          <Property Name="Id_order" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Poin_of_issie">
+          <Key>
+            <PropertyRef Name="Id_point" />
+          </Key>
+          <Property Name="Id_point" Type="int" Nullable="false" />
+          <Property Name="index" Type="int" Nullable="false" />
+          <Property Name="addres" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="Id_status" />
+          </Key>
+          <Property Name="Id_status" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id_user" />
+          </Key>
+          <Property Name="Id_user" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="role" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="FIO" Type="nvarchar" MaxLength="70" Nullable="false" />
+          <Property Name="login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Good_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="Good" Type="Self.Good" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id_category" />
+            </Principal>
+            <Dependent Role="Good">
+              <PropertyRef Name="Id_category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_elem_Good">
+          <End Role="Good" Type="Self.Good" Multiplicity="1" />
+          <End Role="Order_elem" Type="Self.Order_elem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Good">
+              <PropertyRef Name="Id_good" />
+            </Principal>
+            <Dependent Role="Order_elem">
+              <PropertyRef Name="Id_good" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_elem_Order">
+          <End Role="Order" Type="Self.Order" Multiplicity="1" />
+          <End Role="Order_elem" Type="Self.Order_elem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="Id_order" />
+            </Principal>
+            <Dependent Role="Order_elem">
+              <PropertyRef Name="Id_order" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Poin_of_issie">
+          <End Role="Poin_of_issie" Type="Self.Poin_of_issie" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Poin_of_issie">
+              <PropertyRef Name="Id_point" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="Id_point" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Status">
+          <End Role="Status" Type="Self.Status" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="Id_status" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="Id_status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id_user" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="Id_status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище ParfumerModelContainer">
+          <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Good" EntityType="Self.Good" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Order_elem" EntityType="Self.Order_elem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Poin_of_issie" EntityType="Self.Poin_of_issie" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Good_Category" Association="Self.FK_Good_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Good" EntitySet="Good" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_elem_Good" Association="Self.FK_Order_elem_Good">
+            <End Role="Good" EntitySet="Good" />
+            <End Role="Order_elem" EntitySet="Order_elem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_elem_Order" Association="Self.FK_Order_elem_Order">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="Order_elem" EntitySet="Order_elem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Poin_of_issie" Association="Self.FK_Order_Poin_of_issie">
+            <End Role="Poin_of_issie" EntitySet="Poin_of_issie" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Status" Association="Self.FK_Order_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_User" Association="Self.FK_Order_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ParfumerModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Id_category" />
+          </Key>
+          <Property Name="Id_category" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="70" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Good" Relationship="Self.FK_Good_Category" FromRole="Category" ToRole="Good" />
+        </EntityType>
+        <EntityType Name="Good">
+          <Key>
+            <PropertyRef Name="Id_good" />
+          </Key>
+          <Property Name="Id_good" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_category" Type="Int32" Nullable="false" />
+          <Property Name="sale" Type="Int32" />
+          <Property Name="count" Type="Int32" />
+          <Property Name="description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Category" Relationship="Self.FK_Good_Category" FromRole="Good" ToRole="Category" />
+          <NavigationProperty Name="Order_elem" Relationship="Self.FK_Order_elem_Good" FromRole="Good" ToRole="Order_elem" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="Id_order" />
+          </Key>
+          <Property Name="Id_order" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_user" Type="Int32" />
+          <Property Name="Id_point" Type="Int32" Nullable="false" />
+          <Property Name="Id_status" Type="Int32" Nullable="false" />
+          <Property Name="code" Type="Int32" Nullable="false" />
+          <Property Name="date" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="delivery" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="Order_elem" Relationship="Self.FK_Order_elem_Order" FromRole="Order" ToRole="Order_elem" />
+          <NavigationProperty Name="Poin_of_issie" Relationship="Self.FK_Order_Poin_of_issie" FromRole="Order" ToRole="Poin_of_issie" />
+          <NavigationProperty Name="Status" Relationship="Self.FK_Order_Status" FromRole="Order" ToRole="Status" />
+          <NavigationProperty Name="User" Relationship="Self.FK_Order_User" FromRole="Order" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Order_elem">
+          <Key>
+            <PropertyRef Name="Id_order_elemId" />
+          </Key>
+          <Property Name="Id_order_elemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_good" Type="Int32" Nullable="false" />
+          <Property Name="Id_order" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Good" Relationship="Self.FK_Order_elem_Good" FromRole="Order_elem" ToRole="Good" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_Order_elem_Order" FromRole="Order_elem" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Poin_of_issie">
+          <Key>
+            <PropertyRef Name="Id_point" />
+          </Key>
+          <Property Name="Id_point" Type="Int32" Nullable="false" />
+          <Property Name="index" Type="Int32" Nullable="false" />
+          <Property Name="addres" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_Order_Poin_of_issie" FromRole="Poin_of_issie" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Status">
+          <Key>
+            <PropertyRef Name="Id_status" />
+          </Key>
+          <Property Name="Id_status" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_Order_Status" FromRole="Status" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id_user" />
+          </Key>
+          <Property Name="Id_user" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="role" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FIO" Type="String" MaxLength="70" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="login" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_Order_User" FromRole="User" ToRole="Order" />
+        </EntityType>
+        <Association Name="FK_Good_Category">
+          <End Role="Category" Type="Self.Category" Multiplicity="1" />
+          <End Role="Good" Type="Self.Good" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id_category" />
+            </Principal>
+            <Dependent Role="Good">
+              <PropertyRef Name="Id_category" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_elem_Good">
+          <End Role="Good" Type="Self.Good" Multiplicity="1" />
+          <End Role="Order_elem" Type="Self.Order_elem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Good">
+              <PropertyRef Name="Id_good" />
+            </Principal>
+            <Dependent Role="Order_elem">
+              <PropertyRef Name="Id_good" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_elem_Order">
+          <End Role="Order" Type="Self.Order" Multiplicity="1" />
+          <End Role="Order_elem" Type="Self.Order_elem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="Id_order" />
+            </Principal>
+            <Dependent Role="Order_elem">
+              <PropertyRef Name="Id_order" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Poin_of_issie">
+          <End Role="Poin_of_issie" Type="Self.Poin_of_issie" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Poin_of_issie">
+              <PropertyRef Name="Id_point" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="Id_point" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Status">
+          <End Role="Status" Type="Self.Status" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Status">
+              <PropertyRef Name="Id_status" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="Id_status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id_user" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="Id_status" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ParfumerEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Category" EntityType="Self.Category" />
+          <EntitySet Name="Good" EntityType="Self.Good" />
+          <EntitySet Name="Order" EntityType="Self.Order" />
+          <EntitySet Name="Order_elem" EntityType="Self.Order_elem" />
+          <EntitySet Name="Poin_of_issie" EntityType="Self.Poin_of_issie" />
+          <EntitySet Name="Status" EntityType="Self.Status" />
+          <EntitySet Name="User" EntityType="Self.User" />
+          <AssociationSet Name="FK_Good_Category" Association="Self.FK_Good_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Good" EntitySet="Good" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_elem_Good" Association="Self.FK_Order_elem_Good">
+            <End Role="Good" EntitySet="Good" />
+            <End Role="Order_elem" EntitySet="Order_elem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_elem_Order" Association="Self.FK_Order_elem_Order">
+            <End Role="Order" EntitySet="Order" />
+            <End Role="Order_elem" EntitySet="Order_elem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Poin_of_issie" Association="Self.FK_Order_Poin_of_issie">
+            <End Role="Poin_of_issie" EntitySet="Poin_of_issie" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Status" Association="Self.FK_Order_Status">
+            <End Role="Status" EntitySet="Status" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_User" Association="Self.FK_Order_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="Order" EntitySet="Order" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище ParfumerModelContainer" CdmEntityContainer="ParfumerEntities">
+          <EntitySetMapping Name="Category">
+            <EntityTypeMapping TypeName="ParfumerModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="Id_category" ColumnName="Id_category" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Good">
+            <EntityTypeMapping TypeName="ParfumerModel.Good">
+              <MappingFragment StoreEntitySet="Good">
+                <ScalarProperty Name="Id_good" ColumnName="Id_good" />
+                <ScalarProperty Name="Id_category" ColumnName="Id_category" />
+                <ScalarProperty Name="sale" ColumnName="sale" />
+                <ScalarProperty Name="count" ColumnName="count" />
+                <ScalarProperty Name="description" ColumnName="description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Order">
+            <EntityTypeMapping TypeName="ParfumerModel.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="Id_order" ColumnName="Id_order" />
+                <ScalarProperty Name="Id_user" ColumnName="Id_user" />
+                <ScalarProperty Name="Id_point" ColumnName="Id_point" />
+                <ScalarProperty Name="Id_status" ColumnName="Id_status" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="date" ColumnName="date" />
+                <ScalarProperty Name="delivery" ColumnName="delivery" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Order_elem">
+            <EntityTypeMapping TypeName="ParfumerModel.Order_elem">
+              <MappingFragment StoreEntitySet="Order_elem">
+                <ScalarProperty Name="Id_order_elemId" ColumnName="Id_order_elemId" />
+                <ScalarProperty Name="Id_good" ColumnName="Id_good" />
+                <ScalarProperty Name="Id_order" ColumnName="Id_order" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Poin_of_issie">
+            <EntityTypeMapping TypeName="ParfumerModel.Poin_of_issie">
+              <MappingFragment StoreEntitySet="Poin_of_issie">
+                <ScalarProperty Name="Id_point" ColumnName="Id_point" />
+                <ScalarProperty Name="index" ColumnName="index" />
+                <ScalarProperty Name="addres" ColumnName="addres" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Status">
+            <EntityTypeMapping TypeName="ParfumerModel.Status">
+              <MappingFragment StoreEntitySet="Status">
+                <ScalarProperty Name="Id_status" ColumnName="Id_status" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="ParfumerModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Id_user" ColumnName="Id_user" />
+                <ScalarProperty Name="role" ColumnName="role" />
+                <ScalarProperty Name="FIO" ColumnName="FIO" />
+                <ScalarProperty Name="login" ColumnName="login" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
